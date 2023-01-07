@@ -1,16 +1,15 @@
 .article-header {
-    background-color: skyblue;
-    color: white;
-    border: 3px solid transparent;
-    text-align: center;
+  background-color: skyblue;
+  color: white;
+  border: 3px solid transparent;
+  text-align: center;
 }
 
 .section-content {
-    margin-left: 10%;
-    margin-right: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .add-item-btn {
-    float: right;
-    margin-bottom: 5px;
+  float: right;
 }

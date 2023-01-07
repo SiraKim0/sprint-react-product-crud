@@ -1,3 +1,27 @@
+.list-content {
+  margin: 20px 0;
+}
 .list-header {
-    text-align: center;
+  margin: 10px 0;
+}
+.list-ul {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1em;
+}
+.list-item {
+  max-width: 350px;
+  min-width: 200px;
+}
+.list-item img {
+  width: 100%;
+  padding: 5%;
+  border: 1px solid #f2f2f2;
+}
+.list-item-intro {
+  width: 100%;
+}
+.action-btn > button {
+  width: 50%;
 }

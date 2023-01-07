@@ -3,17 +3,18 @@ import { Item } from "./Item.type";
 import "./ItemForm.style.css";
 
 type Props = {
+  data: Item;
   onBackBtnClickHnd: () => void;
-  onSubmitClickHnd: (data: Item) => void;
+  onUpdateClickHnd: (data: Item) => void;
 };
 
-const AddItem = (props: Props) => {
-  const [category, setCategory] = useState("");
-  const [brand, setBrand] = useState("");
-  const [itemName, setItemName] = useState("");
-  const [price, setPrice] = useState("");
+const EditItem = (props: Props) => {
+  const { data, onBackBtnClickHnd, onUpdateClickHnd } = props;
 
-  const { onBackBtnClickHnd, onSubmitClickHnd } = props;
+  const [category, setCategory] = useState(data.category);
+  const [brand, setBrand] = useState(data.brand);
+  const [itemName, setItemName] = useState(data.itemName);
+  const [price, setPrice] = useState(data.price);
 
   const onCategoryChangeHnd = (e: any) => {
     setCategory(e.target.value);
@@ -30,21 +31,21 @@ const AddItem = (props: Props) => {
 
   const onSubmitBtnClickHnd = (e: any) => {
     e.preventDefault();
-    const data: Item = {
-      id: new Date().toJSON.toString(),
+    const updatedData: Item = {
+      id: data.id,
       category: category,
       brand: brand,
       itemName: itemName,
       price: price,
     };
-    onSubmitClickHnd(data);
+    onUpdateClickHnd(updatedData);
     onBackBtnClickHnd();
   };
 
   return (
     <div className="form-container">
       <div>
-        <h3>Add Item Form</h3>
+        <h3>Edit Item Form</h3>
       </div>
       <form onSubmit={onSubmitBtnClickHnd}>
         <div>
@@ -65,10 +66,10 @@ const AddItem = (props: Props) => {
         </div>
         <div>
           <input type="button" value="Back" onClick={onBackBtnClickHnd} />
-          <input type="submit" value="Add Item" />
+          <input type="submit" value="Update Item" />
         </div>
       </form>
     </div>
   );
 };
-export default AddItem;
+export default EditItem;
