@@ -10,13 +10,14 @@ type Props = {
 
 const ItemList = (props: Props) => {
   const { list, onDeleteClickHnd, onEditClickHnd } = props;
+
   return (
     <div className="list-content">
       <h2 className="list-header">상품 목록</h2>
       <ul className="list-ul">
-        {list.map((item) => {
+        {list.map((item, idx) => {
           return (
-            <article className="list-item" key={item.id}>
+            <article className="list-item" key={idx}>
               <figure>
                 <img
                   src="https://cdn.amondz.com/product/71900/resize/mainImg/PSI_756049.jpeg?v=1661598518758"

@@ -32,12 +32,19 @@ const Home = () => {
   const addItem = (data: Item) => {
     setLocalItemList([...itemList, data]);
   };
+
   const deleteItem = (data: Item) => {
-    const indexToDelete = itemList.indexOf(data);
-    const tempList = [...itemList];
-    tempList.splice(indexToDelete, 1);
-    setLocalItemList(tempList);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const indexToDelete = itemList.indexOf(data);
+      const tempList = [...itemList];
+      tempList.splice(indexToDelete, 1);
+      setLocalItemList(tempList);
+      alert("삭제되었습니다");
+    } else {
+      alert("취소합니다.");
+    }
   };
+
   const editItem = (data: Item) => {
     setPage(PageEnum.edit);
     setItemEdit(data);
