@@ -4,6 +4,7 @@ export interface Item {
   brand: string;
   itemName: string;
   price: string;
+  imageUrl: string;
 }
 //dummy data
 // export const dummyItemList: Item[] = [

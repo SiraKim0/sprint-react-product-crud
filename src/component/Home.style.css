@@ -8,8 +8,9 @@
 .section-content {
   margin-left: 20%;
   margin-right: 20%;
+  min-width: 630px;
 }
 
-.add-item-btn {
+.section-content > button {
   float: right;
 }

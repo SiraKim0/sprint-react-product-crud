@@ -19,15 +19,12 @@ type Props = {
 const EditItem = (props: Props) => {
   const { data, onBackBtnClickHnd, onUpdateClickHnd } = props;
 
-  // const [category, setCategory] = useState(data.category);
-  // const [brand, setBrand] = useState(data.brand);
-  // const [itemName, setItemName] = useState(data.itemName);
-  // const [price, setPrice] = useState(data.price);
   const [itemData, setItemData] = useState({
     category: data.category,
     brand: data.brand,
     itemName: data.itemName,
     price: data.price,
+    imageUrl: data.imageUrl,
   });
   const [itemNameMsg, setItemNameMsg] = useState("");
   const [priceMsg, setPriceMsg] = useState("");
@@ -98,6 +95,7 @@ const EditItem = (props: Props) => {
         brand: itemData.brand,
         itemName: itemData.itemName,
         price: itemData.price,
+        imageUrl: itemData.imageUrl,
       };
       onUpdateClickHnd(updatedData);
       onBackBtnClickHnd();
@@ -168,6 +166,7 @@ const EditItem = (props: Props) => {
           onChange={onPriceChangeHnd}
         />
         <span className="error-message">{priceMsg}</span>
+        <img src={itemData.imageUrl} alt="item-img" />
         <div className="action-btn">
           <Button
             variant="outlined"

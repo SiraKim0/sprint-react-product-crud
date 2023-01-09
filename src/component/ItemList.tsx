@@ -19,10 +19,7 @@ const ItemList = (props: Props) => {
           return (
             <article className="list-item" key={idx}>
               <figure>
-                <img
-                  src="https://cdn.amondz.com/product/71900/resize/mainImg/PSI_756049.jpeg?v=1661598518758"
-                  alt="item-img"
-                />
+                <img src={item.imageUrl} alt="item-img" />
                 <div className="list-item-intro">
                   <strong>{item.brand}</strong>
                   <p>{item.itemName}</p>

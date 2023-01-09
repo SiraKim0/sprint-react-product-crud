@@ -11,6 +11,11 @@ const Home = () => {
   const [itemEdit, setItemEdit] = useState({} as Item);
   const [page, setPage] = useState(PageEnum.list);
 
+  const setLocalItemList = (list: Item[]) => {
+    setItemList(list);
+    window.localStorage.setItem("ItemList", JSON.stringify(list));
+  };
+
   useEffect(() => {
     const localData = window.localStorage.getItem("ItemList");
     if (localData) {
@@ -24,25 +29,9 @@ const Home = () => {
   const showListPage = () => {
     setPage(PageEnum.list);
   };
-  const setLocalItemList = (list: Item[]) => {
-    setItemList(list);
-    window.localStorage.setItem("ItemList", JSON.stringify(list));
-  };
 
   const addItem = (data: Item) => {
     setLocalItemList([...itemList, data]);
-  };
-
-  const deleteItem = (data: Item) => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      const indexToDelete = itemList.indexOf(data);
-      const tempList = [...itemList];
-      tempList.splice(indexToDelete, 1);
-      setLocalItemList(tempList);
-      alert("삭제되었습니다");
-    } else {
-      alert("취소합니다.");
-    }
   };
 
   const editItem = (data: Item) => {
@@ -56,6 +45,18 @@ const Home = () => {
     const tempData = [...itemList];
     tempData[indexOfData] = data;
     setLocalItemList(tempData);
+  };
+
+  const deleteItem = (data: Item) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const indexToDelete = itemList.indexOf(data);
+      const tempList = [...itemList];
+      tempList.splice(indexToDelete, 1);
+      setLocalItemList(tempList);
+      alert("삭제되었습니다");
+    } else {
+      alert("취소합니다.");
+    }
   };
 
   return (

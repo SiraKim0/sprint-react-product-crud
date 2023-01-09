@@ -1,15 +1,16 @@
-.form-container {
-  /* text-align: center; */
+.list-header {
+  color: #222222;
 }
 
-input[type="text"] {
-  height: 20px;
-  padding-left: 10px;
-  margin: 5px;
+form {
+  display: flex;
+  flex-direction: column;
 }
-
-input[type="button"],
-input[type="submit"] {
-  height: 25px;
-  margin-left: 5px;
+.error-message {
+  color: #ff2020;
+  font-size: 1em;
+  margin-left: 15px;
+}
+.action-btn {
+  display: inline-block;
 }
