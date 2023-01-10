@@ -44,7 +44,7 @@ const EditItem = (props: Props) => {
     category: data.category,
     brand: data.brand,
     itemName: data.itemName,
-    price: data.price,
+    price: data.price.replace("원", ""),
     imageUrl: data.imageUrl,
   });
   const [itemNameMsg, setItemNameMsg] = useState("");
@@ -181,7 +181,7 @@ const EditItem = (props: Props) => {
             뒤로가기
           </Button>
           <Button variant="contained" type="submit">
-            상품 등록
+            상품 수정
           </Button>
         </div>
       </form>
