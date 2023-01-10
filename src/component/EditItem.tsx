@@ -19,18 +19,7 @@ type Props = {
 const EditItem = (props: Props) => {
   const { data, onBackBtnClickHnd, onUpdateClickHnd } = props;
 
-  const [itemData, setItemData] = useState({
-    category: data.category,
-    brand: data.brand,
-    itemName: data.itemName,
-    price: data.price,
-    imageUrl: data.imageUrl,
-  });
-  const [itemNameMsg, setItemNameMsg] = useState("");
-  const [priceMsg, setPriceMsg] = useState("");
-  const [isItemName, setIsItemName] = useState(true);
-  const [isPrice, setIsPrice] = useState(true);
-
+  //dummy list
   const categorySelect = [
     "반지",
     "목걸이",
@@ -50,6 +39,20 @@ const EditItem = (props: Props) => {
     "스테이잼",
   ];
 
+  //state
+  const [itemData, setItemData] = useState({
+    category: data.category,
+    brand: data.brand,
+    itemName: data.itemName,
+    price: data.price,
+    imageUrl: data.imageUrl,
+  });
+  const [itemNameMsg, setItemNameMsg] = useState("");
+  const [priceMsg, setPriceMsg] = useState("");
+  const [isItemName, setIsItemName] = useState(true);
+  const [isPrice, setIsPrice] = useState(true);
+
+  //handler
   const onCategoryChangeHnd = (e: SelectChangeEvent) => {
     setItemData({ ...itemData, category: e.target.value });
   };
@@ -77,7 +80,6 @@ const EditItem = (props: Props) => {
       setIsPrice(true);
     }
   };
-
   const onSubmitBtnClickHnd = (e: any) => {
     e.preventDefault();
     if (itemData.category === "") {
@@ -94,7 +96,7 @@ const EditItem = (props: Props) => {
         category: itemData.category,
         brand: itemData.brand,
         itemName: itemData.itemName,
-        price: itemData.price,
+        price: `${itemData.price}원`,
         imageUrl: itemData.imageUrl,
       };
       onUpdateClickHnd(updatedData);
@@ -166,8 +168,10 @@ const EditItem = (props: Props) => {
           onChange={onPriceChangeHnd}
         />
         <span className="error-message">{priceMsg}</span>
-        <img src={itemData.imageUrl} alt="item-img" />
-        <div className="action-btn">
+        <div className="item-image">
+          <img src={itemData.imageUrl} alt="item-img" />
+        </div>
+        <div className="action-btn-back-submit">
           <Button
             variant="outlined"
             type="button"

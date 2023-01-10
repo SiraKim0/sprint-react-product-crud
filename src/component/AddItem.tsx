@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Item } from "./Item.type";
 import "./ItemForm.style.css";
 import {
@@ -22,71 +22,7 @@ type Props = {
 const AddItem = (props: Props) => {
   const { onBackBtnClickHnd, onSubmitClickHnd } = props;
 
-  const [itemData, setItemData] = useState({
-    category: "",
-    brand: "",
-    itemName: "",
-    price: "",
-  });
-  const [itemNameMsg, setItemNameMsg] = useState("");
-  const [priceMsg, setPriceMsg] = useState("");
-  const [isItemName, setIsItemName] = useState(false);
-  const [isPrice, setIsPrice] = useState(false);
-
-  //image
-  const [imageFile, setImageFile] = useState<File>();
-  const [downloadURL, setDownloadURL] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  const selectFileHnd = (files: any) => {
-    if (files && files[0].size < 10000000) {
-      setImageFile(files[0]);
-      console.log(files[0]);
-    } else {
-      alert("파일이 너무 큽니다.");
-    }
-  };
-
-  const imageUploadHnd = () => {
-    if (imageFile) {
-      const name = imageFile.name;
-      const storageRef = ref(storageService, `images/${name}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          alert(error.message);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            setDownloadURL(url);
-          });
-        }
-      );
-    } else {
-      alert("파일을 찾을 수 없습니다.");
-    }
-  };
-
-  const imageRemoveHnd = () => {
-    setImageFile(undefined);
-  };
-
+  //dummy list
   const categorySelect = [
     "반지",
     "목걸이",
@@ -106,6 +42,26 @@ const AddItem = (props: Props) => {
     "스테이잼",
   ];
 
+  //state
+  const [itemData, setItemData] = useState({
+    category: "",
+    brand: "",
+    itemName: "",
+    price: "",
+  });
+  const [itemNameMsg, setItemNameMsg] = useState("");
+  const [priceMsg, setPriceMsg] = useState("");
+  const [isItemName, setIsItemName] = useState(false);
+  const [isPrice, setIsPrice] = useState(false);
+
+  //image state
+  const [imageFile, setImageFile] = useState<File>();
+  const [imgName, setImgName] = useState("");
+  const [downloadURL, setDownloadURL] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  //handler
   const onCategoryChangeHnd = (e: SelectChangeEvent) => {
     setItemData({ ...itemData, category: e.target.value });
   };
@@ -133,7 +89,6 @@ const AddItem = (props: Props) => {
       setIsPrice(true);
     }
   };
-
   const onSubmitBtnClickHnd = (e: any) => {
     e.preventDefault();
     if (itemData.category === "") {
@@ -150,12 +105,62 @@ const AddItem = (props: Props) => {
         category: itemData.category,
         brand: itemData.brand,
         itemName: itemData.itemName,
-        price: itemData.price,
+        price: `${itemData.price}원`,
         imageUrl: downloadURL,
       };
       onSubmitClickHnd(data);
       onBackBtnClickHnd();
     }
+  };
+
+  //image handler
+  const selectFileHnd = (files: any) => {
+    if (files && files[0].size < 10000000) {
+      setImageFile(files[0]);
+      console.log(files[0]);
+      setImgName(files[0].name);
+    } else {
+      alert("파일이 너무 큽니다.");
+    }
+  };
+  const imageUploadHnd = () => {
+    if (imageFile) {
+      const name = imageFile.name;
+      const storageRef = ref(storageService, `images/${name}`);
+      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          alert(error.message);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setDownloadURL(url);
+            setIsUploading(true);
+          });
+        }
+      );
+    } else {
+      alert("파일을 찾을 수 없습니다.");
+    }
+  };
+  const imageRemoveHnd = () => {
+    setImageFile(undefined);
+    setImgName("");
   };
 
   return (
@@ -224,32 +229,47 @@ const AddItem = (props: Props) => {
         <span className="error-message">{priceMsg}</span>
         <div className="select-image">
           <input
+            type="text"
+            className="input-image-file"
+            value={imgName}
+            placeholder="사진첨부: gif, jpg, jpeg, png"
+          />
+          <label htmlFor="file">파일찾기</label>
+          <input
             type="file"
-            placeholder="업로드 파일을 선택하세요."
+            id="file"
             accept=".gif, .jpg, .jpeg, .png"
             onChange={(files) => selectFileHnd(files.target.files)}
           />
-          {imageFile && (
-            <>
-              <Button variant="outlined" onClick={imageRemoveHnd}>
-                클리어
-              </Button>
-              <Button variant="contained" onClick={imageUploadHnd}>
-                업로드
-              </Button>
-              <Stack spacing={2} direction="row">
-                <CircularProgress variant="determinate" value={progress} />
-              </Stack>
-              {downloadURL && (
-                <>
-                  <img src={downloadURL} alt={downloadURL} />
-                </>
-              )}
-            </>
-          )}
         </div>
 
-        <div className="action-btn">
+        {imageFile && (
+          <div className="image-box">
+            <h4>사진 미리보기</h4>
+            <div className="action-btn-image">
+              <Button variant="outlined" onClick={imageRemoveHnd}>
+                사진 삭제
+              </Button>
+              <Button variant="contained" onClick={imageUploadHnd}>
+                사진 업로드
+              </Button>
+              {isUploading ? (
+                <span>사진 업로드 완료</span>
+              ) : (
+                <Stack spacing={2} direction="row">
+                  <CircularProgress variant="determinate" value={progress} />
+                </Stack>
+              )}
+            </div>
+            {downloadURL && (
+              <div className="item-image">
+                <img src={downloadURL} alt={downloadURL} />
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="action-btn-back-submit">
           <Button
             variant="outlined"
             type="button"

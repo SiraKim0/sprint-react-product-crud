@@ -10,10 +10,6 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1em;
 }
-.list-item {
-  max-width: 350px;
-  min-width: 200px;
-}
 .list-item img {
   width: 100%;
   padding: 5%;
@@ -22,6 +18,13 @@
 .list-item-intro {
   width: 100%;
 }
-.action-btn > button {
-  width: 50%;
+
+@media (max-width: 1100px) {
+  .list-ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .list-item {
+    flex: 1 1 200px;
+  }
 }

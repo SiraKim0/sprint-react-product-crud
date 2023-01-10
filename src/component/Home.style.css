@@ -1,5 +1,5 @@
 .article-header {
-  background-color: skyblue;
+  background-color: #1565c0;
   color: white;
   border: 3px solid transparent;
   text-align: center;
@@ -8,7 +8,6 @@
 .section-content {
   margin-left: 20%;
   margin-right: 20%;
-  min-width: 630px;
 }
 
 .section-content > button {

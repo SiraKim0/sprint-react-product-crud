@@ -1,6 +1,8 @@
 import { Item } from "./Item.type";
 import "./ItemList.style.css";
 import { Button } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 
 type Props = {
   list: Item[];
@@ -30,14 +32,16 @@ const ItemList = (props: Props) => {
                 <Button
                   variant="contained"
                   type="button"
+                  startIcon={<Edit />}
                   onClick={() => onEditClickHnd(item)}
                 >
                   상품 수정
                 </Button>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   type="button"
                   value="Delete"
+                  startIcon={<Delete />}
                   onClick={() => onDeleteClickHnd(item)}
                 >
                   상품 삭제
