@@ -1,6 +1,6 @@
 ## sprint-react-product-crud
 ### 배포 링크
-👉 [배포 링크 바로가기](sprint-react-product-crud.vercel.app) 👈 <br>
+👉 [배포 링크 바로가기](https://sprint-react-product-crud.vercel.app/) 👈 <br>
 
 ### 🚩 Skills
 `react`, `typescript`, `Material-UI`, `firebase` <br><br>
